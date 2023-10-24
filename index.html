@@ -4,8 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-do</title>
+    <link rel="stylesheet" href="script.js">
 </head>
 <body>
-    
+    <header id="new-task-form">
+        <input type="text" id="new-task-form"
+        placeholder="Какие планы?"/>
+        <input type="submit" value="Add task" id="new-task-submit">
+        
+
+    </header>
+    <main >
+        <section class="task-list">
+            <h2>Task</h2>
+            <div id="tasks">
+                <div class="content">
+                    <input type="text"
+                    class="text"
+                    value="Моя задача"
+                    readonly>
+                </div>
+                <div class="action">
+                    <button class="edit">Изменить</button>
+                    <button class="delete">Удалить</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
