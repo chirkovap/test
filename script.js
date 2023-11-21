@@ -62,7 +62,7 @@ window.addEventListener('load', () => {
 
         const task_delete_el = document.createElement("button"); // Создаем кнопку для удаления задачи
         task_delete_el.classList.add("delete"); // Добавляем класс для стилизации
-        task_delete_el.innerHTML = "Delete"; // Устанавливаем текст кнопки
+        task_delete_el.innerHTML = "Удалить"; // Устанавливаем текст кнопки
 
         // Добавляем обработчик для удаления задачи при клике на кнопку
         task_delete_el.addEventListener('click', () => {
@@ -76,7 +76,7 @@ window.addEventListener('load', () => {
 
         const task_edit_el = document.createElement("button"); // Создаем кнопку для редактирования задачи
         task_edit_el.classList.add("edit"); 
-        task_edit_el.innerHTML = "Edit";
+        task_edit_el.innerHTML = "Изменить";
 
         task_edit_el.addEventListener('click', () => {
             task_input_el.removeAttribute("readonly"); 
