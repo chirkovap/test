@@ -5,9 +5,6 @@
     --light: #eee;
     --pink: #ec4899;
     --purple: #8B5cf6;
-    --priority-low: rgba(52, 152, 219, 0.7); /* Более прозрачный синий для низкого приоритета */
-    --priority-medium: rgba(243, 156, 18, 0.7); /* Более прозрачный оранжевый для среднего приоритета */
-    --priority-high: rgba(231, 76, 60, 0.7); /* Более прозрачный красный для высокого приоритета */
 }
 
 * {
@@ -29,7 +26,7 @@ header {
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    text-align: center; /* Выравнивание текста по центру */
+    text-align: center; 
 }
 
 #new-task-form { 
@@ -105,27 +102,14 @@ main {
     transition: 0.4s;
 }
 
-/* Цвет кнопки "Delete" */
 .task .actions .delete {
-    color: crimson; /* Стандартный цвет текста */
+    color: crimson; 
 }
 
-/* При наведении меняем только цвет текста */
+
 .task .actions .delete:hover {
-    color: #eee; /* Новый цвет текста при наведении */
+    color: #eee; 
 }
-/* Colors based on priority */
-/* .task.low {
-    background-color: var(--priority-low);
-}
-
-.task.medium {
-    background-color: var(--priority-medium);
-}
-
-.task.high {
-    background-color: var(--priority-high);
-} */
 #priority-select {
     padding: 0.5rem;
     border-radius: 0.5rem;
@@ -145,18 +129,17 @@ main {
 .priority-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Выравнивание по центру */
-    margin-bottom: 0.5rem; /* Отступ снизу */
+    align-items: center; 
+    margin-bottom: 0.5rem; 
 }
 
-/* Стили для подписи к комбобоксу */
+
 label {
     color: var(--light);
     font-size: 1rem;
     margin-bottom: 0.5rem;
 }
 
-/* Стили для комбобокса */
 #priority-select {
     padding: 0.3rem;
     border-radius: 0.3rem;
@@ -168,37 +151,37 @@ label {
 }
 
 .task.active {
-    background-color: rgb(7, 135, 164); /* Цвет для активных задач */
+    background-color: rgb(7, 135, 164); 
 }
 
 .task.completed {
-    background-color: rgb(5, 119, 5); /* Цвет для выполненных задач */
+    background-color: rgb(5, 119, 5); 
 }
 
 .task.cancelled {
-    background-color: rgb(131, 50, 4); /* Цвет для отмененных задач */
+    background-color: rgb(131, 50, 4); 
 }
 
 .priority.low {
-    color: green; /* Цвет для низкого приоритета */
+    color: green; 
 }
 
 .priority.medium {
-    color: orange; /* Цвет для среднего приоритета */
+    color: orange; 
 }
 
 .priority.high {
-    color: red; /* Цвет для высокого приоритета */
+    color: red; 
 }
 
 .priority-low {
-    color: green;
-  }
-  
-  .priority-medium {
-    color: orange;
-  }
-  
-  .priority-high {
-    color: red;
-  }
+  color: green;
+}
+
+.priority-medium {
+  color: orange;
+}
+
+.priority-high {
+  color: red;
+}
