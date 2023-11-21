@@ -4,33 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-do</title>
-    <link rel="stylesheet" href="script.js">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="new-task-form">
-        <input type="text" id="new-task-form"
-        placeholder="Какие планы?"/>
-        <input type="submit" value="Add task" id="new-task-submit">
-        
-
-    </header>
-    <main >
-        <section class="task-list">
-            <h2>Task</h2>
-            <div id="tasks">
-                <div class="content">
-                    <input type="text"
-                    class="text"
-                    value="Моя задача"
-                    readonly>
-                </div>
-                <div class="action">
-                    <button class="edit">Изменить</button>
-                    <button class="delete">Удалить</button>
-                </div>
+    <header>
+        <h1>To-da App</h1>
+        <form id="new-task-form">
+            <div class="priority-wrapper">
+                <label for="priority-select">Приоритет:</label>
+                <select id="priority-select">
+                    <option value="low">Низкий</option>
+                    <option value="medium">Средний</option>
+                    <option value="high">Высокий</option>
+                </select>
             </div>
-        </section>
-    </main>
+            <input type="text" id="new-task-input" name="new-task-input" placeholder="Введите задачу">
+            <input type="submit" value="Добавить задачу" id="new-task-submit">
+        </form>
+    </header>
+        <main>
+            <section class="task-list">
+                <h1>Task</h1>
+                <div id="tasks">
+                    <!-- <div class="task">
+                        <div class="task active">
+                            <div class="content">
+                                <input type="text" class="text" value="Активная задача" readonly>
+                                <span class="priority">Priority: Low</span> 
+                                <span class="status">Status: Active</span> 
+                            </div>
+                            <div class="actions">
+                                <button class="delete">Удалить</button>
+                                <button class="change-status">Изменить статус</button> 
+                            </div>
+                        </div> -->
+                    </div>
+            </section>
+        </main>
+
     <script src="script.js"></script>
 </body>
 </html>

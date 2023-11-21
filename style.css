@@ -1,0 +1,204 @@
+:root {
+    --dark: #374151;
+    --darker: #1f2937;
+    --darkest: #111827;
+    --light: #eee;
+    --pink: #ec4899;
+    --purple: #8B5cf6;
+    --priority-low: rgba(52, 152, 219, 0.7); /* Более прозрачный синий для низкого приоритета */
+    --priority-medium: rgba(243, 156, 18, 0.7); /* Более прозрачный оранжевый для среднего приоритета */
+    --priority-high: rgba(231, 76, 60, 0.7); /* Более прозрачный красный для высокого приоритета */
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Fira sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--dark);
+    color: white;
+}
+
+header {
+    padding: 2rem 1rem;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+#new-task-form { 
+    display: flex;
+}
+
+#new-task-input {
+    flex: 1 1 0%;
+    background-color: var(--darker);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    color: var(--light);
+    font-size: 1.25rem;
+}
+
+input, button {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+#new-task-submit {
+    color: var(--gray);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+main {
+    flex: 1 1 0%;
+    padding: 2rem 1rem;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.task-list {
+    padding: 1rem;
+}
+
+.task-list h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+#tasks .task {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+#tasks .task .content .text {
+    color: white;
+    font-size: 1.125rem;
+    width: 100%;
+}
+
+#tasks .task .actions {
+    display: flex;
+    margin: 0 -0.5rem;
+}
+
+#tasks .task .actions button {
+    cursor: pointer;
+    margin: 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.4s;
+}
+
+/* Цвет кнопки "Delete" */
+.task .actions .delete {
+    color: crimson; /* Стандартный цвет текста */
+}
+
+/* При наведении меняем только цвет текста */
+.task .actions .delete:hover {
+    color: #eee; /* Новый цвет текста при наведении */
+}
+/* Colors based on priority */
+/* .task.low {
+    background-color: var(--priority-low);
+}
+
+.task.medium {
+    background-color: var(--priority-medium);
+}
+
+.task.high {
+    background-color: var(--priority-high);
+} */
+#priority-select {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--light);
+    background-color: var(--darker);
+    color: var(--light);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#priority-select option {
+    background-color: var(--dark);
+    color: var(--light);
+    font-size: 1rem;
+}
+
+.priority-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Выравнивание по центру */
+    margin-bottom: 0.5rem; /* Отступ снизу */
+}
+
+/* Стили для подписи к комбобоксу */
+label {
+    color: var(--light);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Стили для комбобокса */
+#priority-select {
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+    border: 1px solid var(--light);
+    background-color: var(--darker);
+    color: var(--light);
+    font-size: 0.9rem;
+    width: fit-content;
+}
+
+.task.active {
+    background-color: rgb(7, 135, 164); /* Цвет для активных задач */
+}
+
+.task.completed {
+    background-color: rgb(5, 119, 5); /* Цвет для выполненных задач */
+}
+
+.task.cancelled {
+    background-color: rgb(131, 50, 4); /* Цвет для отмененных задач */
+}
+
+.priority.low {
+    color: green; /* Цвет для низкого приоритета */
+}
+
+.priority.medium {
+    color: orange; /* Цвет для среднего приоритета */
+}
+
+.priority.high {
+    color: red; /* Цвет для высокого приоритета */
+}
+
+.priority-low {
+    color: green;
+  }
+  
+  .priority-medium {
+    color: orange;
+  }
+  
+  .priority-high {
+    color: red;
+  }
