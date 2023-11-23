@@ -6,6 +6,12 @@ window.addEventListener('load', () => {
     const selectPriority = document.querySelector("#priority-select"); // Выбор приоритета
     let tasks = []; // Массив для хранения задач
 
+    const priorityMapping = {
+        low: 'Низкий',
+        medium: 'Средний',
+        high: 'Высокий'
+    };
+
     // Проверяем наличие задач в локальном хранилище
     if (localStorage.getItem('tasks')) {
         // Получаем задачи из локального хранилища и парсим JSON
@@ -28,10 +34,10 @@ window.addEventListener('load', () => {
         }
 
         // Добавляем новую задачу в массив задач
-        tasks.push({ task, priority, status: "Status: Active" });
+        tasks.push({ task, priority, status: "Активно" });
         // Сохраняем обновленные задачи в локальном хранилище
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        addTaskToDOM({ task, priority, status: "Status: Active" });
+        addTaskToDOM({ task, priority, status: "Активно" });
 
         // Очищаем поле ввода после добавления задачи
         input.value = "";
@@ -39,12 +45,12 @@ window.addEventListener('load', () => {
 
     function addTaskToDOM({ task, priority, status }) {
         // Создаем элементы задачи
-        const task_el = document.createElement("div"); 
-        task_el.classList.add("task"); 
+        const task_el = document.createElement("div");
+        task_el.classList.add("task");
         task_el.classList.add(priority);
         task_el.classList.add("active");
 
-        const task_content_el = document.createElement("div"); 
+        const task_content_el = document.createElement("div");
         task_content_el.classList.add("content");
 
         task_el.append(task_content_el); // Добавляем блок с содержимым к задаче
@@ -68,42 +74,44 @@ window.addEventListener('load', () => {
         task_delete_el.addEventListener('click', () => {
             const index = tasks.findIndex(t => t.task === task && t.priority === priority);
             if (index !== -1) {
-                tasks.splice(index, 1); 
+                tasks.splice(index, 1);
                 localStorage.setItem('tasks', JSON.stringify(tasks));
                 task_el.remove();
             }
         });
 
         const task_edit_el = document.createElement("button"); // Создаем кнопку для редактирования задачи
-        task_edit_el.classList.add("edit"); 
+        task_edit_el.classList.add("edit");
         task_edit_el.innerHTML = "Изменить";
 
-        task_edit_el.addEventListener('click', () => {
-            task_input_el.removeAttribute("readonly"); 
-            task_input_el.focus();
+        task_edit_el.addEventListener('click', (event) => {
+            event.stopPropagation(); // Остановить распространение события клика
 
-            task_input_el.addEventListener('blur', () => {
-                task_input_el.setAttribute("readonly", "readonly");
-                const index = tasks.findIndex(t => t.task === task && t.priority === priority);
-                if (index !== -1) {
-                    tasks[index].task = task_input_el.value;
-                    localStorage.setItem('tasks', JSON.stringify(tasks)); 
-                }
-            });
+            task_input_el.removeAttribute("readonly");
+            task_input_el.focus();
+        });
+
+        task_input_el.addEventListener('blur', () => {
+            task_input_el.setAttribute("readonly", "readonly");
+            const index = tasks.findIndex(t => t.task === task && t.priority === priority);
+            if (index !== -1) {
+                tasks[index].task = task_input_el.value;
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
         });
 
         task_actions_el.append(task_delete_el, task_edit_el); // Добавляем кнопки действий к блоку с действиями
-        task_el.append(task_actions_el); 
-        list_el.append(task_el); 
+        task_el.append(task_actions_el);
+        list_el.append(task_el);
 
         const priorityEl = document.createElement("span"); // Создаем элемент для отображения приоритета
         priorityEl.classList.add("priority"); // Добавляем класс для стилизации
-        priorityEl.classList.add("priority-" + priority); 
-        priorityEl.textContent = `Priority: ${priority}`; 
+        priorityEl.classList.add("priority-" + priority);
+        priorityEl.textContent = `Приоритет: ${priorityMapping[priority] || priority}`;
 
         const statusEl = document.createElement("span"); // Создаем элемент для отображения статуса задачи
-        statusEl.classList.add("status"); 
-        statusEl.textContent = status; 
+        statusEl.classList.add("status");
+        statusEl.textContent = status;
 
         const spaceEl = document.createTextNode(' '); // Чисто пробел между статусом и приоритетом)))
 
@@ -114,24 +122,24 @@ window.addEventListener('load', () => {
 
         // Изменение статуса задачи при клике на нее
         task_el.addEventListener('click', () => {
-            if (statusEl.textContent === 'Status: Active') {
-                statusEl.textContent = 'Status: Completed'; 
+            if (statusEl.textContent === 'Активно') {
+                statusEl.textContent = 'Завершено';
                 task_el.classList.remove('active');
-                task_el.classList.add('completed'); 
-            } else if (statusEl.textContent === 'Status: Completed') {
-                statusEl.textContent = 'Status: Cancelled'; 
+                task_el.classList.add('completed');
+            } else if (statusEl.textContent === 'Завершено') {
+                statusEl.textContent = 'Отменено';
                 task_el.classList.remove('completed');
-                task_el.classList.add('cancelled'); 
-            } else if (statusEl.textContent === 'Status: Cancelled') {
-                statusEl.textContent = 'Status: Active'; 
+                task_el.classList.add('cancelled');
+            } else if (statusEl.textContent === 'Отменено') {
+                statusEl.textContent = 'Активно';
                 task_el.classList.remove('cancelled');
-                task_el.classList.add('active'); 
+                task_el.classList.add('active');
             }
 
             const index = tasks.findIndex(t => t.task === task && t.priority === priority);
             if (index !== -1) {
                 tasks[index].status = statusEl.textContent;
-                localStorage.setItem('tasks', JSON.stringify(tasks)); 
+                localStorage.setItem('tasks', JSON.stringify(tasks));
             }
         });
     }
