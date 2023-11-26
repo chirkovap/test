@@ -1,4 +1,3 @@
-
 window.addEventListener('load', () => {
     const form = document.querySelector('#new-task-form'); // Форма для добавления задачи
     const input = document.querySelector("#new-task-input"); // Поле ввода для задачи
@@ -44,7 +43,6 @@ window.addEventListener('load', () => {
     });
 
     function addTaskToDOM({ task, priority, status }) {
-        // Создаем элементы задачи
         const task_el = document.createElement("div");
         task_el.classList.add("task");
         task_el.classList.add(priority);
@@ -53,39 +51,41 @@ window.addEventListener('load', () => {
         const task_content_el = document.createElement("div");
         task_content_el.classList.add("content");
 
-        task_el.append(task_content_el); // Добавляем блок с содержимым к задаче
+        task_el.append(task_content_el);
 
-        const task_input_el = document.createElement("input"); // Создаем поле ввода для текста задачи
-        task_input_el.classList.add("text"); // Добавляем класс для стилизации
-        task_input_el.type = "text"; // Устанавливаем тип поля
-        task_input_el.value = task; // Устанавливаем текст задачи
-        task_input_el.setAttribute("readonly", "readonly"); // Делаем поле только для чтения
+        const task_input_el = document.createElement("input");
+        task_input_el.classList.add("text");
+        task_input_el.type = "text";
+        task_input_el.value = task;
+        task_input_el.setAttribute("readonly", "readonly");
 
         task_content_el.append(task_input_el);
 
-        const task_actions_el = document.createElement("div"); // Создаем блок для действий с задачей
-        task_actions_el.classList.add("actions"); // Добавляем класс для стилизации
+        const task_actions_el = document.createElement("div");
+        task_actions_el.classList.add("actions");
 
-        const task_delete_el = document.createElement("button"); // Создаем кнопку для удаления задачи
-        task_delete_el.classList.add("delete"); // Добавляем класс для стилизации
-        task_delete_el.innerHTML = "Удалить"; // Устанавливаем текст кнопки
-
-        // Добавляем обработчик для удаления задачи при клике на кнопку
+        const task_delete_el = document.createElement("button");
+        task_delete_el.classList.add("delete");
+        task_delete_el.innerHTML = "Удалить";
         task_delete_el.addEventListener('click', () => {
             const index = tasks.findIndex(t => t.task === task && t.priority === priority);
             if (index !== -1) {
-                tasks.splice(index, 1);
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-                task_el.remove();
+                const result = confirm('Вы уверены, что хотите удалить эту задачу?');
+                if (result) {
+                    tasks.splice(index, 1);
+                    localStorage.setItem('tasks', JSON.stringify(tasks));
+                    task_el.remove();
+                }
             }
         });
 
-        const task_edit_el = document.createElement("button"); // Создаем кнопку для редактирования задачи
+
+        const task_edit_el = document.createElement("button");
         task_edit_el.classList.add("edit");
         task_edit_el.innerHTML = "Изменить";
 
         task_edit_el.addEventListener('click', (event) => {
-            event.stopPropagation(); // Остановить распространение события клика
+            event.stopPropagation();
 
             task_input_el.removeAttribute("readonly");
             task_input_el.focus();
@@ -93,54 +93,63 @@ window.addEventListener('load', () => {
 
         task_input_el.addEventListener('blur', () => {
             task_input_el.setAttribute("readonly", "readonly");
-            const index = tasks.findIndex(t => t.task === task && t.priority === priority);
-            if (index !== -1) {
-                tasks[index].task = task_input_el.value;
+            const taskIndex = Array.from(list_el.children).indexOf(task_el);
+            if (taskIndex !== -1) {
+                tasks[taskIndex].task = task_input_el.value;
                 localStorage.setItem('tasks', JSON.stringify(tasks));
             }
         });
 
-        task_actions_el.append(task_delete_el, task_edit_el); // Добавляем кнопки действий к блоку с действиями
+        task_actions_el.append(task_delete_el, task_edit_el);
         task_el.append(task_actions_el);
         list_el.append(task_el);
 
-        const priorityEl = document.createElement("span"); // Создаем элемент для отображения приоритета
-        priorityEl.classList.add("priority"); // Добавляем класс для стилизации
+        const priorityEl = document.createElement("span");
+        priorityEl.classList.add("priority");
         priorityEl.classList.add("priority-" + priority);
         priorityEl.textContent = `Приоритет: ${priorityMapping[priority] || priority}`;
 
-        const statusEl = document.createElement("span"); // Создаем элемент для отображения статуса задачи
+        const statusEl = document.createElement("span");
         statusEl.classList.add("status");
-        statusEl.textContent = status;
+        task_el.classList.add(status.toLowerCase());
 
-        const spaceEl = document.createTextNode(' '); // Чисто пробел между статусом и приоритетом)))
+        const spaceEl = document.createTextNode(' ');
 
-        // Добавляем элементы приоритета и статуса к содержимому задачи
-        task_content_el.appendChild(priorityEl);
-        task_content_el.appendChild(spaceEl);
-        task_content_el.appendChild(statusEl);
+        const statusSelect = document.createElement("select");
+        statusSelect.classList.add("status-select");
 
-        // Изменение статуса задачи при клике на нее
-        task_el.addEventListener('click', () => {
-            if (statusEl.textContent === 'Активно') {
-                statusEl.textContent = 'Завершено';
-                task_el.classList.remove('active');
-                task_el.classList.add('completed');
-            } else if (statusEl.textContent === 'Завершено') {
-                statusEl.textContent = 'Отменено';
-                task_el.classList.remove('completed');
-                task_el.classList.add('cancelled');
-            } else if (statusEl.textContent === 'Отменено') {
-                statusEl.textContent = 'Активно';
-                task_el.classList.remove('cancelled');
-                task_el.classList.add('active');
-            }
+        const statusOptions = [
+            { text: "Активно", value: "active" },
+            { text: "Завершено", value: "completed" },
+            { text: "Отменено", value: "cancelled" }
+        ];
+
+        statusOptions.forEach((option, index) => {
+            const optionEl = document.createElement("option");
+            optionEl.value = option.value;
+            optionEl.textContent = option.text;
+            statusSelect.appendChild(optionEl);
+        });
+        const defaultStatus = "active"; // Установите значение по умолчанию, если status не соответствует ни одному из вариантов
+        statusSelect.value = status || defaultStatus;
+
+        statusSelect.addEventListener('change', (e) => { 
+            const newStatus = e.target.value
 
             const index = tasks.findIndex(t => t.task === task && t.priority === priority);
             if (index !== -1) {
-                tasks[index].status = statusEl.textContent;
+               tasks[index].status = newStatus;
                 localStorage.setItem('tasks', JSON.stringify(tasks));
             }
+
+            task_el.classList.remove("active", "completed", "cancelled");
+            task_el.classList.add(newStatus);
         });
+
+
+        task_content_el.appendChild(priorityEl);
+        task_content_el.appendChild(spaceEl);
+        task_content_el.appendChild(statusEl);
+        task_content_el.appendChild(statusSelect); 
     }
 });
